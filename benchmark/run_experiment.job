@@ -17,8 +17,8 @@ OUTFILE="output_exp22_1_${SLURM_JOB_ID}.dat"
 # OUTFILE="output_exp22_2_${SLURM_JOB_ID}.dat"
 
 NREP=3
-#change between flags --sequential, --vectorized
-BINARY="python3 ./src.py --sequential"
+#change between flags --sequential, --vectorized --memory
+BINARY="python3 ./src.py --memory"
 
 
 # remove old output data

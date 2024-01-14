@@ -1,13 +1,14 @@
 import numpy as np 
-from memory_profiler import profile
+import tracemalloc
 
-@profile
-def compute_julia_set_vectorized(xmin, xmax, ymin, ymax, im_width, im_height, c):
+def compute_julia_set_memory(xmin, xmax, ymin, ymax, im_width, im_height, c):
     zabs_max = 10
     nit_max = 300
 
     xwidth = xmax - xmin
-    yheight = ymax - ymin
+    yheight = ymax - ymin    
+    
+    tracemalloc.start() 
 
     julia = np.empty((im_width, im_height), dtype=np.float32)
     for ix in range(im_width):
@@ -22,5 +23,11 @@ def compute_julia_set_vectorized(xmin, xmax, ymin, ymax, im_width, im_height, c)
                 nit += 1
             ratio = nit / nit_max
             julia[ix, iy] = ratio
+            
+    current, peak = tracemalloc.get_traced_memory()  # Get memory usage
+    tracemalloc.stop()  # Stop memory tracing
+
+    print(f"Memory usage: {current / 10**6} MB")
+    print(f"Peak memory usage: {peak / 10**6} MB")
 
     return julia

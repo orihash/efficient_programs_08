@@ -1,10 +1,11 @@
 from multiprocessing import Pool
 import numpy as np
-from memory_profiler import profile
+import tracemalloc
 
-@profile
 def compute_julia_in_parallel(size, xmin, xmax, ymin, ymax, patch, nprocs, c):
     task_list = []
+    tracemalloc.start() 
+
     for x in range(0, size, patch):
         if x + patch < size:
             for y in range(0, size, patch):
@@ -26,7 +27,13 @@ def compute_julia_in_parallel(size, xmin, xmax, ymin, ymax, patch, nprocs, c):
     for result in results:
         x, y, patch_img = result
         julia_img[x:x+patch, y:y+patch] = patch_img
-        
+
+    current, peak = tracemalloc.get_traced_memory()  # Get memory usage
+    tracemalloc.stop()  # Stop memory tracing
+
+    print(f"Memory usage: {current / 10**6} MB")
+    print(f"Peak memory usage: {peak / 10**6} MB")
+    
     return julia_img
 
 

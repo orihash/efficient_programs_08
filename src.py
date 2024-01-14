@@ -4,6 +4,7 @@ import numpy as np
 from julia.sequential_julia import compute_julia_set_sequential
 from julia.vectorized_julia import compute_julia_set_vectorized
 from julia.parallel_julia import compute_julia_in_parallel
+from julia.memory_julia import compute_julia_set_memory
 
 
 if __name__ == "__main__":
@@ -24,6 +25,7 @@ if __name__ == "__main__":
     parser.add_argument("--sequential", help="set this flag to true to run the sequential program", action="store_true")
     parser.add_argument("--parallel", help="set this flag to true to run the parallel program", action="store_true")
     parser.add_argument("--vectorized", help="set this flag to true to run the vectorized program", action="store_true")
+    parser.add_argument("--memory", help="set this flag to true to run the memory efficient program", action="store_true")
     args = parser.parse_args()
 
 
@@ -42,6 +44,8 @@ if __name__ == "__main__":
             c)
     elif args.vectorized:
         julia_img = compute_julia_set_vectorized(args.xmin, args.xmax, args.ymin, args.ymax, args.size, args.size, c)
+    elif args.memory:
+        julia_img = compute_julia_set_memory(args.xmin, args.xmax, args.ymin, args.ymax, args.size, args.size, c)
     rtime = time.perf_counter() - stime
 
     print(f"{args.size},{args.patch},{args.nprocs},{rtime}")
