@@ -10,7 +10,7 @@
 # uncomment parameters accordingly
 
 # Benchmarking num processes
-SIZE=(160 1050)
+SIZE=(160 1050 2100)
 BENCHMARK_SET=1      # c_b
 OUTFILE="output_exp22_1_${SLURM_JOB_ID}.dat"
 # BENCHMARK_SET=0    # c_s
@@ -18,7 +18,7 @@ OUTFILE="output_exp22_1_${SLURM_JOB_ID}.dat"
 
 NREP=3
 #change between flags --sequential, --vectorized
-BINARY="python3 ./src.py --vectorized"
+BINARY="python3 ./src.py --sequential"
 
 
 # remove old output data

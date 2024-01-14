@@ -5,7 +5,6 @@ from julia.sequential_julia import compute_julia_set_sequential
 from julia.vectorized_julia import compute_julia_set_vectorized
 from julia.parallel_julia import compute_julia_in_parallel
 
-BENCHMARK_C = complex(-0.2, -0.65)
 
 if __name__ == "__main__":
 
@@ -27,11 +26,9 @@ if __name__ == "__main__":
     parser.add_argument("--vectorized", help="set this flag to true to run the vectorized program", action="store_true")
     args = parser.parse_args()
 
-    # # assign c based on mode
-    c = None
-    if args.benchmark:
-        c = BENCHMARK_C 
 
+    c = complex(-0.2, -0.65) 
+    
     stime = time.perf_counter()
     if args.sequential:
             julia_img = compute_julia_set_sequential(args.xmin, args.xmax, args.ymin, args.ymax, args.size, args.size, c)

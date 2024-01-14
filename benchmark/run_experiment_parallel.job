@@ -11,18 +11,18 @@
 
 # Benchmarking num processes
 NPROCS=(1 2 4 8 16 24 32)
-SIZE=(160 1050)
+SIZE=(160 1050 2100)
 PATCH=(25)
-BENCHMARK_SET=1      # c_b
-OUTFILE="output_exp22_1_${SLURM_JOB_ID}.dat"
+# BENCHMARK_SET=1      # c_b
+# OUTFILE="output_exp22_1_${SLURM_JOB_ID}.dat"
 # BENCHMARK_SET=0    # c_s
-# OUTFILE="output_exp22_2_${SLURM_JOB_ID}.dat"
+OUTFILE="output_exp22_2_${SLURM_JOB_ID}.dat"
 
 # Benchmarking patch size
 # NPROCS=(32)
 # SIZE=(750)
 # PATCH=(1 5 10 20 55 150 400)
-# BENCHMARK_SET=0    # c_s
+# # BENCHMARK_SET=0    # c_s
 # OUTFILE="output_exp23_${SLURM_JOB_ID}.dat"
 
 NREP=3
