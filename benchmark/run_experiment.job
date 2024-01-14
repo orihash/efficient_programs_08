@@ -1,0 +1,40 @@
+#! /bin/bash
+  
+# you will not have to change the SBATCH parameters
+#SBATCH -p q_student
+#SBATCH -N 1
+#SBATCH -c 32
+#SBATCH --cpu-freq=High
+#SBATCH --time=5:00
+
+# uncomment parameters accordingly
+
+# Benchmarking num processes
+SIZE=(160 1050)
+BENCHMARK_SET=1      # c_b
+OUTFILE="output_exp22_1_${SLURM_JOB_ID}.dat"
+# BENCHMARK_SET=0    # c_s
+# OUTFILE="output_exp22_2_${SLURM_JOB_ID}.dat"
+
+NREP=3
+#change between flags --sequential, --vectorized
+BINARY="python3 ./src.py --vectorized"
+
+
+# remove old output data
+echo -n "" > "${OUTFILE}"
+
+
+for size in "${SIZE[@]}"
+do
+   for r in `seq 1 ${NREP}`
+   do
+      if ((BENCHMARK_SET)); then
+         echo "${BINARY} --size $size --benchmark"
+         ${BINARY} --size $size  --benchmark >> "${OUTFILE}"
+      else 
+         echo "${BINARY} --size $size "
+         ${BINARY} --size $size  >> "${OUTFILE}"
+      fi
+   done 
+done

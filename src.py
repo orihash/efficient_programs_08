@@ -1,9 +1,9 @@
 import argparse
 import time
 import numpy as np
-from sequential_julia import compute_julia_set_sequential
-from vectorized_julia import compute_julia_set_vectorized
-from parallel_julia import compute_julia_in_parallel
+from julia.sequential_julia import compute_julia_set_sequential
+from julia.vectorized_julia import compute_julia_set_vectorized
+from julia.parallel_julia import compute_julia_in_parallel
 
 BENCHMARK_C = complex(-0.2, -0.65)
 
@@ -22,23 +22,15 @@ if __name__ == "__main__":
     parser.add_argument("--draw-axes", help="Whether to draw axes", action="store_true")
     parser.add_argument("-o", help="output file")
     parser.add_argument("--benchmark", help="Whether to execute the script with the benchmark Julia set", action="store_true")
-    parser.add_argument("--sequential", help="set this flag to true to run the sequential program")
-    parser.add_argument("--parallel", help="set this flag to true to run the parallel program")
-    parser.add_argument("--vectorized", help="set this flag to true to run the vectorized program")
+    parser.add_argument("--sequential", help="set this flag to true to run the sequential program", action="store_true")
+    parser.add_argument("--parallel", help="set this flag to true to run the parallel program", action="store_true")
+    parser.add_argument("--vectorized", help="set this flag to true to run the vectorized program", action="store_true")
     args = parser.parse_args()
-
-    #print(args)
-    # if args.group_size is not None:
-    #     GROUP_SIZE = args.group_size
-    # if args.group_number is not None:
-    #     GROUP_NUMBER = args.group_number
 
     # # assign c based on mode
     c = None
     if args.benchmark:
         c = BENCHMARK_C 
-    # else:
-    #     c = c_from_group(GROUP_SIZE, GROUP_NUMBER) 
 
     stime = time.perf_counter()
     if args.sequential:
@@ -90,4 +82,3 @@ if __name__ == "__main__":
 
         plt.tight_layout()
         plt.savefig(args.o, bbox_inches='tight')
-        #plt.show()
